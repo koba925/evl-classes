@@ -22,9 +22,12 @@ class SXPString {
 
 const isString = a => a instanceof SXPString
 
+const valueOf = a => a.val
+
 module.exports = {
   SXPNumber,
   isNumber,
   SXPString,
-  isString
+  isString,
+  valueOf
 }
