@@ -1,58 +1,30 @@
 /* eslint-env jest */
 
 const {
-  SXPNumber, isNumber,
-  SXPString, isString,
-  SXPBool, isBool,
-  valueOf
+  makeValue, isValue, valueOf,
+  makeSymbol, isSymbol, nameOf
 } = require('../src/sexp')
 
-test('The value of one is 1', () => {
-  const one = new SXPNumber(1)
-  expect(valueOf(one)).toBe(1)
+test('The value of value(1) is 1', () => {
+  expect(valueOf(makeValue(1))).toBe(1)
 })
 
-test('One is a number', () => {
-  const one = new SXPNumber(1)
-  expect(isNumber(one)).toBe(true)
+test('Value(1) is a value', () => {
+  expect(isValue(makeValue(1))).toBe(true)
 })
 
-test('Aaa is not a number', () => {
-  const aaa = new SXPString('aaa')
-  expect(isNumber(aaa)).toBe(false)
+test('Symbol("a") is not a value', () => {
+  expect(isValue(makeSymbol('a'))).toBe(false)
 })
 
-test('The value of aaa is "aaa"', () => {
-  const aaa = new SXPString('aaa')
-  expect(valueOf(aaa)).toBe('aaa')
+test('The name of Symbol("a") is "a"', () => {
+  expect(nameOf(makeSymbol('a'))).toBe('a')
 })
 
-test('Aaa is a string', () => {
-  const aaa = new SXPString('aaa')
-  expect(isString(aaa)).toBe(true)
+test('Symbol("a") is a symbol', () => {
+  expect(isSymbol(makeSymbol('a'))).toBe(true)
 })
 
-test('One is not a string', () => {
-  const one = new SXPNumber(1)
-  expect(isString(one)).toBe(false)
-})
-
-test('The value of true is true', () => {
-  const t = new SXPBool(true)
-  expect(valueOf(t)).toBe(true)
-})
-
-test('The value of false is false', () => {
-  const f = new SXPBool(false)
-  expect(valueOf(f)).toBe(false)
-})
-
-test('True is a bool', () => {
-  const t = new SXPBool(true)
-  expect(isBool(t)).toBe(true)
-})
-
-test('One is not a bool', () => {
-  const one = new SXPNumber(1)
-  expect(isBool(one)).toBe(false)
+test('Value(1) is not a symbol', () => {
+  expect(isSymbol(makeValue(1))).toBe(false)
 })

@@ -4,7 +4,8 @@
   "description": "evl with classes",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "standard && jest",
+    "fix": "standard --fix"
   },
   "author": "",
   "license": "ISC",
