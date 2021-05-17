@@ -22,6 +22,18 @@ class SXPString {
 
 const isString = a => a instanceof SXPString
 
+class SXPBool {
+  constructor (val) {
+    this.val = val
+  }
+
+  toString () {
+    return this.val.toString()
+  }
+}
+
+const isBool = a => a instanceof SXPBool
+
 const valueOf = a => a.val
 
 module.exports = {
@@ -29,5 +41,7 @@ module.exports = {
   isNumber,
   SXPString,
   isString,
+  SXPBool,
+  isBool,
   valueOf
 }

@@ -1,7 +1,10 @@
 /* eslint-env jest */
 
 const {
-  SXPNumber, isNumber, SXPString, isString, valueOf
+  SXPNumber, isNumber,
+  SXPString, isString,
+  SXPBool, isBool,
+  valueOf
 } = require('../src/sexp')
 
 test('The value of one is 1', () => {
@@ -32,4 +35,24 @@ test('Aaa is a string', () => {
 test('One is not a string', () => {
   const one = new SXPNumber(1)
   expect(isString(one)).toBe(false)
+})
+
+test('The value of true is true', () => {
+  const t = new SXPBool(true)
+  expect(valueOf(t)).toBe(true)
+})
+
+test('The value of false is false', () => {
+  const f = new SXPBool(false)
+  expect(valueOf(f)).toBe(false)
+})
+
+test('True is a bool', () => {
+  const t = new SXPBool(true)
+  expect(isBool(t)).toBe(true)
+})
+
+test('One is not a bool', () => {
+  const one = new SXPNumber(1)
+  expect(isBool(one)).toBe(false)
 })
