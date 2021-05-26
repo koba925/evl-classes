@@ -1,5 +1,5 @@
 const {
-  makeValue, isValue, valueOf
+  isValue
 } = require('./sexp')
 
 const evl = (exp) => {
