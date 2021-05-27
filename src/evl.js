@@ -6,10 +6,9 @@ const evl = (exp) => {
   if (isValue(exp)) return exp
 }
 
-const evalsTo = function (received, expected) {
+const evalsTo = (received, expected) => {
   return {
-    message: () =>
-      `Actual: ${toString(received)} Expected: ${toString(expected)}`,
+    message: () => `Actual: ${received} Expected: ${expected}`,
     pass: equals(evl(toSexp(received)), toSexp(expected))
   }
 }
