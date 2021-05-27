@@ -1,8 +1,12 @@
 /* eslint-env jest */
 
-const { makeValue } = require('../src/sexp')
-const { evl } = require('../src/evl')
+const { evalsTo } = require('../src/evl')
 
-test('1 is evaluated to 1', () => {
-  expect(evl(makeValue(1))).toEqual(makeValue(1))
+expect.extend({ evalsTo })
+
+test('"1" is evaluated to 1', () => {
+  expect('1').evalsTo('1')
+})
+test('"aaa" is evaluated to "aaa"', () => {
+  expect('"aaa"').evalsTo('"aaa"')
 })
