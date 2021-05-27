@@ -1,9 +1,9 @@
 /* eslint-env jest */
 
 const {
-  makeValue, isValue, valueOf, eqv,
+  makeValue, isValue, valueOf, eqv, isTrue,
   NULL, isNull,
-  makeSymbol, isSymbol, nameOf,
+  makeSymbol, isSymbol, nameOf, symbolIs,
   isPair, isAtom, cons, car, cdr, setCar, setCdr, equals,
   toString, toSexp
 } = require('../src/sexp')
@@ -16,15 +16,12 @@ describe('Test for values', () => {
   test('A number is a value', () => {
     expect(isValue(makeValue(1))).toBe(true)
   })
-
   test('A boolean is a value', () => {
     expect(isValue(makeValue(true))).toBe(true)
   })
-
   test('A string is a value', () => {
     expect(isValue(makeValue('str'))).toBe(true)
   })
-
   test('A symbol is not a value', () => {
     expect(isValue(makeSymbol('a'))).toBe(false)
   })
@@ -32,21 +29,27 @@ describe('Test for values', () => {
   test('1 is eqv to 1', () => {
     expect(eqv(makeValue(1), makeValue(1))).toBe(true)
   })
-
   test('1 is not eqv to 2', () => {
     expect(eqv(makeValue(1), makeValue(2))).toBe(false)
   })
-
   test('1 is not eqv to "1"', () => {
     expect(eqv(makeValue(1), makeValue('1'))).toBe(false)
   })
-
   test('1 is not eqv to symbol "a"', () => {
     expect(eqv(makeValue(1), makeSymbol('a'))).toBe(false)
   })
-
   test('Symbol "a" is not eqv to 1', () => {
     expect(eqv(makeSymbol('a'), makeValue(1))).toBe(false)
+  })
+
+  test('True is true', () => {
+    expect(isTrue(makeValue(true))).toBe(true)
+  })
+  test('False is not true', () => {
+    expect(isTrue(makeValue(false))).toBe(false)
+  })
+  test('0 is not true', () => {
+    expect(isTrue(makeValue(0))).toBe(false)
   })
 })
 
@@ -54,7 +57,6 @@ describe('Test for null', () => {
   test('NULL is null', () => {
     expect(isNull(NULL)).toBe(true)
   })
-
   test('A number is not null', () => {
     expect(isNull(makeValue(1))).toBe(false)
   })
@@ -68,9 +70,18 @@ describe('Test for symbols', () => {
   test('A symbol is a symbol', () => {
     expect(isSymbol(makeSymbol('sym'))).toBe(true)
   })
-
   test('A value is not a symbol', () => {
     expect(isSymbol(makeValue(1))).toBe(false)
+  })
+
+  test('A symbol sym is a symbol named "sym"', () => {
+    expect(symbolIs(makeSymbol('sym'), 'sym')).toBe(true)
+  })
+  test('A symbol sym is not a symbol named "mys"', () => {
+    expect(symbolIs(makeSymbol('sym'), 'mys')).toBe(false)
+  })
+  test('A symbol sym is not a symbol named "sym"', () => {
+    expect(symbolIs(makeValue(1), 'sym')).toBe(false)
   })
 })
 

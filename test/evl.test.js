@@ -19,3 +19,13 @@ test('"aaa" is evaluated to "aaa"', () => {
 test('"1" is evaluated to 1', () => {
   expect('1').evalsTo('1')
 })
+
+test('if evals consequence when the condition is true', () => {
+  expect('(if #t "true" "false")').evalsTo('"true"')
+})
+test('if evals alternative when the condition is false', () => {
+  expect('(if #f "true" "false")').evalsTo('"false"')
+})
+test('if evals alternative when the condition is not true', () => {
+  expect('(if 0 "true" "false")').evalsTo('"false"')
+})

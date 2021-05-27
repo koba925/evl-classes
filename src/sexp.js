@@ -20,6 +20,7 @@ const makeValue = a => new SXPValue(a)
 const isValue = a => a instanceof SXPValue
 const valueOf = a => a.val
 const eqv = (a, b) => isValue(a) && isValue(b) && a.val === b.val
+const isTrue = a => isValue(a) && valueOf(a) === true
 
 const NULL = new SXPValue(null)
 const isNull = a => isValue(a) && valueOf(a) === null
@@ -37,6 +38,7 @@ class SXPSymbol {
 const makeSymbol = a => new SXPSymbol(a)
 const isSymbol = a => a instanceof SXPSymbol
 const nameOf = a => a.name
+const symbolIs = (a, name) => isSymbol(a) && name === nameOf(a)
 
 class SXPPair {
   constructor (car, cdr) {
@@ -142,11 +144,13 @@ module.exports = {
   isValue,
   valueOf,
   eqv,
-  makeSymbol,
+  isTrue,
   NULL,
   isNull,
+  makeSymbol,
   isSymbol,
   nameOf,
+  symbolIs,
   isPair,
   isAtom,
   cons,
