@@ -1,5 +1,5 @@
 const {
-  isValue, isTrue, symbolIs, car, cdr, equals, toSexp
+  isValue, isTrue, symbolIs, car, cdr, equals, toString, toSexp
 } = require('./sexp')
 
 const ifCond = exp => car(cdr(exp))
@@ -14,14 +14,19 @@ const evl = (exp) => {
   if (symbolIs(car(exp), 'if')) return doIf(exp)
 }
 
+const evlString = str => evl(toSexp(str))
+
 const evalsTo = (received, expected) => {
   return {
-    message: () => `${received} was not evalueated to ${expected}`,
-    pass: equals(evl(toSexp(received)), toSexp(expected))
+    message: () => `
+Actual: ${toString(received)}
+Expected ${toString(expected)}`,
+    pass: equals(received, expected)
   }
 }
 
 module.exports = {
   evl,
+  evlString,
   evalsTo
 }
