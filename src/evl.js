@@ -1,6 +1,8 @@
 const {
-  isValue, isTrue, symbolIs, car, cdr, equals, toString, toSexp
+  isValue, isTrue, nameOf, car, cdr, equals, toString, toSexp, isSymbol
 } = require('./sexp')
+
+const op = exp => car(exp)
 
 const quoteText = exp => car(cdr(exp))
 const doQuote = exp => quoteText(exp)
@@ -12,10 +14,19 @@ const doIf = exp => isTrue(evl(ifCond(exp)))
   ? evl(ifConseq(exp))
   : evl(ifAlt(exp))
 
+const SPECIAL_FORMS = {
+  quote: doQuote,
+  if: doIf
+}
+
+const isSpecialForm = exp => isSymbol(op(exp)) &&
+  nameOf(op(exp)) in SPECIAL_FORMS
+const doSpecialForm = exp =>
+  SPECIAL_FORMS[nameOf(op(exp))](exp)
+
 const evl = (exp) => {
   if (isValue(exp)) return exp
-  if (symbolIs(car(exp), 'quote')) return doQuote(exp)
-  if (symbolIs(car(exp), 'if')) return doIf(exp)
+  if (isSpecialForm(exp)) return doSpecialForm(exp)
 }
 
 const evlString = str => evl(toSexp(str))
