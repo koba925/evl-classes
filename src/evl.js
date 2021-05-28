@@ -5,28 +5,28 @@ const {
 const op = exp => car(exp)
 
 const quoteText = exp => car(cdr(exp))
-const doQuote = exp => quoteText(exp)
+const evlQuote = exp => quoteText(exp)
 
 const ifCond = exp => car(cdr(exp))
 const ifConseq = exp => car(cdr(cdr(exp)))
 const ifAlt = exp => car(cdr(cdr(cdr(exp))))
-const doIf = exp => isTrue(evl(ifCond(exp)))
+const evlIf = exp => isTrue(evl(ifCond(exp)))
   ? evl(ifConseq(exp))
   : evl(ifAlt(exp))
 
 const SPECIAL_FORMS = {
-  quote: doQuote,
-  if: doIf
+  quote: evlQuote,
+  if: evlIf
 }
 
 const isSpecialForm = exp => isSymbol(op(exp)) &&
   nameOf(op(exp)) in SPECIAL_FORMS
-const doSpecialForm = exp =>
+const evlSpecialForm = exp =>
   SPECIAL_FORMS[nameOf(op(exp))](exp)
 
 const evl = (exp) => {
   if (isValue(exp)) return exp
-  if (isSpecialForm(exp)) return doSpecialForm(exp)
+  if (isSpecialForm(exp)) return evlSpecialForm(exp)
 }
 
 const evlString = str => evl(toSexp(str))
