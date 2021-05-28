@@ -21,6 +21,10 @@ test('"1" is evaluated to 1', () => {
   expect(evlString('1')).evalsTo(toSexp('1'))
 })
 
+test('quote returns its text', () => {
+  expect(evlString('(quote (a 1))')).evalsTo(toSexp('(a 1)'))
+})
+
 test('if evals consequence when the condition is true', () => {
   expect(evlString('(if #t "true" "false")')).evalsTo(toSexp('"true"'))
 })
