@@ -4,7 +4,8 @@ const {
   makeValue, isValue, valueOf, eqv, isTrue,
   NULL, isNull,
   makeSymbol, isSymbol, nameOf, symbolIs,
-  isPair, isAtom, cons, car, cdr, setCar, setCdr, equals,
+  isPair, isAtom, cons, car, cdr, setCar, setCdr,
+  equals, makeList,
   toString, toSexp
 } = require('../src/sexp')
 
@@ -158,6 +159,22 @@ describe('Test for equals', () => {
       cons(makeValue(1), makeValue(2)),
       cons(makeValue(1), makeValue(3))
     )).toBe(false)
+  })
+})
+
+describe('makeList', () => {
+  it('makes NULL from empty arguments', () => {
+    expect(makeList()).toStrictEqual(NULL)
+  })
+  it('makes a one element list from 1 arguments', () => {
+    expect(makeList(makeValue(1))).toStrictEqual(
+      cons(makeValue(1), NULL)
+    )
+  })
+  it('makes a two element list from 2 arguments', () => {
+    expect(makeList(makeValue(1), makeValue(1))).toStrictEqual(
+      cons(makeValue(1), cons(makeValue(1), NULL))
+    )
   })
 })
 

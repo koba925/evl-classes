@@ -34,3 +34,37 @@ test('if evals alternative when the condition is false', () => {
 test('if evals alternative when the condition is not true', () => {
   expect(evlString('(if 0 "true" "false")')).evalsTo(toSexp('"false"'))
 })
+
+test('Lambda is evaluated to a compound', () => {
+  expect(evlString('(lambda (a b) (+ a b))')).evalsTo(
+    toSexp('("compound" (a b) (+ a b) ())')
+  )
+})
+
+test('(cons 1 2) is (1 . 2)', () => {
+  expect(evlString('(cons 1 2)')).evalsTo(toSexp('(1 . 2)'))
+})
+test('(cons 1 (cons 2 3)) is (1 . (2 . 3))', () => {
+  expect(evlString('(cons 1 (cons 2 3))'))
+    .evalsTo(toSexp('(1 . (2 . 3))'))
+})
+test('(cons (cons 1 2) 3) is ((1 . 2) . 3)', () => {
+  expect(evlString('(cons (cons 1 2) 3)'))
+    .evalsTo(toSexp('((1 . 2) . 3)'))
+})
+
+test('(car (cons 1 2)) is 1', () => {
+  expect(evlString('(car (cons 1 2))')).evalsTo(toSexp('1'))
+})
+
+test('(cdr (cons 1 2)) is 2', () => {
+  expect(evlString('(cdr (cons 1 2))')).evalsTo(toSexp('2'))
+})
+
+test('1 + 2 = 3', () => {
+  expect(evlString('(+ 1 2)')).evalsTo(toSexp('3'))
+})
+
+test('3 - 1 = 2', () => {
+  expect(evlString('(- 3 1)')).evalsTo(toSexp('2'))
+})

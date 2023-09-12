@@ -22,6 +22,9 @@ const valueOf = a => a.val
 const eqv = (a, b) => isValue(a) && isValue(b) && a.val === b.val
 const isTrue = a => isValue(a) && valueOf(a) === true
 
+const plus = (a, b) => makeValue(valueOf(a) + valueOf(b))
+const minus = (a, b) => makeValue(valueOf(a) - valueOf(b))
+
 const NULL = new SXPValue(null)
 const isNull = a => isValue(a) && valueOf(a) === null
 
@@ -72,7 +75,8 @@ const equals = (a, b) => {
   if (!isPair(a) || !isPair(b)) return false
   return equals(car(a), car(b)) && equals(cdr(a), cdr(b))
 }
-
+const makeList = (...xs) =>
+  xs.length === 0 ? NULL : cons(xs[0], makeList(...xs.slice(1)))
 const toString = a => a.toString()
 
 const skipWhite = str => {
@@ -145,6 +149,8 @@ module.exports = {
   valueOf,
   eqv,
   isTrue,
+  plus,
+  minus,
   NULL,
   isNull,
   makeSymbol,
@@ -159,6 +165,7 @@ module.exports = {
   setCar,
   setCdr,
   equals,
+  makeList,
   toString,
   toSexp
 }
